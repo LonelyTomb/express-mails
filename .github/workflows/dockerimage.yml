@@ -2,23 +2,26 @@ name: Docker Image CI
 
 on:
   pull_request:
-    branches: 
+    branches:
       - master
-  
+
 
 jobs:
 
   build:
- 
+
     runs-on: ubuntu-latest
- 
+
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag victory/express-mail:$(date +%s)
-      
+      run: docker build . --file Dockerfile --tag express-mail
+
     - name: Login to Docker
-      run: docker login -u ${{ DOCKER_USER }} -p ${{ DOCKER_PWD }}
-      
+      run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
+
+    - name: Tag Image
+      run: docker tag express-mail lonelytomb/express-mail:$(date +%s)
+
     - name: Push Image
-      run: docker push victory/express-mail:$(date +%s)
+      run: docker push lonelytomb/express-mail:$(date +%s)
