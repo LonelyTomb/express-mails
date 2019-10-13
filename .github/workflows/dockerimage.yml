@@ -21,7 +21,7 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
 
     - name: Tag Image
-      run: docker tag express-mail:$(date +%s) lonelytomb/express-mail:$(date +%s)
+      run: docker tag express-mail lonelytomb/express-mail:$(date +%s)
 
     - name: Push Image
       run: docker push lonelytomb/express-mail:$(date +%s)
