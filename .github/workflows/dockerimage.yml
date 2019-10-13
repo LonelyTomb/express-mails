@@ -15,10 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag victory/express-mail:$(date +%s)
+      run: docker build . --file Dockerfile --tag lonelytomb/express-mail:$(date +%s)
 
     - name: Login to Docker
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
 
     - name: Push Image
-      run: docker push victory/express-mail:$(date +%s)
+      run: docker push lonelytomb/express-mail:$(date +%s)
