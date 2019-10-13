@@ -1,9 +1,9 @@
 name: Docker Image CI
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      - develop
 
 
 jobs:
@@ -15,10 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lonelytomb/express-mail:$(date +%s)
+      run: docker build . --file Dockerfile --tag express-mail
 
     - name: Login to Docker
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
+
+    - name: Tag Image
+      run: docker tag express-mail:$(date +%s) lonelytomb/express-mail:$(date +%s)
 
     - name: Push Image
       run: docker push lonelytomb/express-mail:$(date +%s)
