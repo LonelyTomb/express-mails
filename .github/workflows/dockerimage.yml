@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag express-mail
+      - uses: actions/checkout@v1
+      - name: Build the Docker image
+        run: docker build --build-arg ARG_MAIL_API=${{ secrets.MAIL_API }} --build-arg ARG_MAIL_DOMAIN=${{ secrets.MAIL_DOMAIN }}  --file Dockerfile --tag express-mail .
 
-    - name: Login to Docker
-      run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
+      - name: Login to Docker
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
 
-    - name: Tag Image
-      run: docker tag express-mail lonelytomb/express-mail:$(date +%s)
+      - name: Tag Image
+        run: docker tag express-mail lonelytomb/express-mail:$(date +%s)
 
-    - name: Push Image
-      run: docker push lonelytomb/express-mail:$(date +%s)
+      - name: Push Image
+        run: docker push lonelytomb/express-mail

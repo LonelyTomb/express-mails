@@ -1,0 +1,20 @@
+version: "3"
+services:
+  web:
+    image: lonelytomb/express-mail
+    environment:
+      - MAIL_DOMAIN=${MAIL_DOMAIN}
+      - MAIL_API=${MAIL_API}
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - webnet
+networks:
+  webnet:
